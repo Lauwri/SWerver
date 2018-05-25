@@ -59,7 +59,7 @@ exports.create = (req, res) => {
                 return res.status(500).send({ message: err.message});
             });
         } else {
-            res.status(404).send({ message: "Specie not found :("});
+            res.status(404).send({ message: "No such species in SWapi :("});
         }
     }).catch(err => {
         return res.status(500).send({ message: err.message});
