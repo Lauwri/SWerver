@@ -1,5 +1,4 @@
 const operations = require('../libs/planetOperations');
-const Planet = require('../models/planet');
 
 exports.findAll = (req, res) => {
     operations.findAll()

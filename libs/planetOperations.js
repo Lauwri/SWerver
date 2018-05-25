@@ -15,7 +15,6 @@ exports.create = (newName) => {
     const planet = new Planet({
         name : newName
     })
-
     return planet.save();
 }
 
@@ -35,7 +34,6 @@ exports.updateAddSpecie = (id, specie) => {
 }
 
 exports.updateSpecie = (id, name, changedVals) => {
-    console.log(changedVals);
     return Planet.update({_id : id, "species.name" : name}, 
     { "$set": changedVals });
 }
