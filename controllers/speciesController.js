@@ -1,9 +1,9 @@
-const operations = require('../libs/planetOperations');
-const fetchSpecie = require('../libs/fetchSpecie');
+const Planet = require('../models/planet');
+const fetchSpecies = require('../libs/fetchSpecies');
 
 //Finds all species in a planet
 exports.findAll = (req, res) => {
-    operations.findOne(req.params.id)
+    Planet.findById(req.params.id)
     .then(planet => {
         if(planet) {
             return res.send(planet.species);
@@ -14,29 +14,23 @@ exports.findAll = (req, res) => {
     });
 }
 
-//finds one specie in a planet, with param "name"
+//finds one species in a planet, with param "name"
 exports.findOne = (req, res) => {
-    operations.findOne(req.params.id)
-    .then(planet => {
-        if(planet) {
-            var found = planet.species.find(element => {
-                return element.name === req.params.name
-            })
-
-            if(found) {
-                return res.send(found);
+    Planet.findOneSpecies(req.params.id, req.params.name, (err, result) => {
+        if(!err) {
+            if(result) {
+                return res.send(result);
+            } else {
+                return res.status(404).send({ message: "Species with given name not found :("});
             }
-            return res.status(404).send({ message: "Specie with given name not found :("});
         }
-        res.status(404).send({ message: "Planet not found :("});
-    }).catch(err => {
         res.status(500).send({ message: err.message});
     });
 }
 
 /*
- * Creates a new specie for a planet. 
- * This specie needs to be found in SWapi 
+ * Creates a new species for a planet. 
+ * This species needs to be found in SWapi 
  */
 exports.create = (req, res) => {
     if(!req.body.name) {
@@ -45,11 +39,11 @@ exports.create = (req, res) => {
         );
     }
 
-    fetchSpecie.fetchSpecie(req.body.name)
+    fetchSpecies.fetchSpecies(req.body.name)
     .then(response => {
         var specie = response.data.results[0];
         if(specie) {
-            operations.updateAddSpecie(req.params.id, specie)
+            Planet.updateAddSpecie(req.params.id, specie)
             .then(planet => {
                 if(planet) {
                     return res.send(planet);
@@ -69,7 +63,7 @@ exports.create = (req, res) => {
 
 
 /*
-* Updates the specie with given values.
+* Updates the species with given values.
 *
 * Example values in JSON:
 *   {"changedValues": {
@@ -86,7 +80,7 @@ exports.update = (req, res) => {
         return res.status(400).send({ message: "Name can't be empty"});
     }
 
-    operations.updateSpecie(req.params.id, req.params.name, req.body.changedValues)
+    Planet.updateSpecies(req.params.id, req.params.name, req.body.changedValues)
     .then(planet => {
         if(planet) {
             return res.send(planet);
@@ -104,10 +98,12 @@ exports.deleteOne = (req, res) => {
             {message : "Name can't be empty"}
         );
     }
-    operations.updateRemoveSpecie(req.params.id, req.params.name)
+    Planet.updateRemoveSpecies(req.params.id, req.params.name)
     .then(planet => {
         if(planet) {
-            return res.send(planet);
+            return res.send({
+                message: "Deleted species succesfully",
+                planet : planet});
         }
         return res.status(404).send({ message: "Planet not found :("});
     }).catch(err => {
@@ -117,9 +113,10 @@ exports.deleteOne = (req, res) => {
 
 //Deletes all species from a planet
 exports.deleteAll = (req, res) => {
-    operations.updateRemoveAllSpecies(req.params.id)
+    Planet.updateRemoveAllSpecies(req.params.id)
     .then(planet => {
         return res.send({
+            message: "Deleted all species succesfully",
             planet : planet
         })
 

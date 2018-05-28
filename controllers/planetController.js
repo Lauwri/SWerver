@@ -1,7 +1,7 @@
-const operations = require('../libs/planetOperations');
+const Planet = require('../models/planet');
 
 exports.findAll = (req, res) => {
-    operations.findAll()
+    Planet.find()
     .then(planets => {
         res.send(planets);
     }).catch(err => {
@@ -10,7 +10,7 @@ exports.findAll = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-    operations.findOne(req.params.id)
+    Planet.findById(req.params.id)
     .then(planet => {
         if(planet) {
             return res.send(planet);
@@ -29,7 +29,10 @@ exports.create = (req, res) => {
         );
     }
 
-    operations.create(req.body.name)
+    const planet = new Planet({
+        name : req.body.name
+    })
+    planet.save()
     .then(newPlanet => {
         res.send({
             message: "Created a new planet",
@@ -46,7 +49,7 @@ exports.update = (req, res) => {
         return res.status(400).send({ message: "Name can't be empty"});
     }
 
-    operations.update(req.params.id,req.body.name)
+    Planet.updateName(req.params.id,req.body.name)
     .then(planet => {
         if(planet) {
             return res.send(planet);
@@ -59,7 +62,7 @@ exports.update = (req, res) => {
 
 
 exports.deleteOne = (req, res) => {
-    operations.deleteOne(req.params.id)
+    Planet.findByIdAndRemove(req.params.id)
     .then(planet => {
         if(planet) {
             return res.send({
@@ -74,7 +77,7 @@ exports.deleteOne = (req, res) => {
 }
 
 exports.deleteAll = (req, res) => {
-    operations.deleteAll()
+    Planet.remove({})
     .then(planets => {
         return res.send({
             message : "Removed all planets"
