@@ -1,5 +1,5 @@
 const axios = require('axios');
 
-exports.fetchSpecie = (name) => {
+exports.fetchSpecies = (name) => {
     return axios.get('https://swapi.co/api/species/?search=' + name);
 }

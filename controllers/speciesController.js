@@ -38,12 +38,11 @@ exports.create = (req, res) => {
             {message : "Name can't be empty"}
         );
     }
-
     fetchSpecies.fetchSpecies(req.body.name)
     .then(response => {
         var specie = response.data.results[0];
         if(specie) {
-            Planet.updateAddSpecie(req.params.id, specie)
+            Planet.updateAddSpecies(req.params.id, specie)
             .then(planet => {
                 if(planet) {
                     return res.send(planet);
