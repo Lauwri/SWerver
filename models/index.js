@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 module.exports.connect = (uri) => {
-    mongoose.connect(uri, (err) => {
+
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
         if(err) {
-        console.log(err);
+            console.log(err);
         } else {
-        console.log("connected");
+            console.log("connected");
         }
     });
 
