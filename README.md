@@ -1,27 +1,25 @@
-## SWerver
+# SWerver
 RESTful Node.JS server for creating planets with possibility to add species from <a href="https://swapi.co/api/">SWapi</a>
 
 
-# Running
+## Running
 
 Requires mongodb instance as database.
 Starting scripts include npm install to make running a bit easier
 
 **For npm**
-
 Development
-```npm start-dev
+```npm start-dev```
 
 Production
-```npm start
+```npm start```
 
 **For yarn**
-
 Development
-```yarn start-dev
+```yarn start-dev```
 
 Production
-```yarn start
+```yarn start```
 
 
 **API**
