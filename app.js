@@ -3,8 +3,10 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const sanitize = require("mongo-sanitize");
 
-const port = process.env.PORT || 3000
 const config = require('./config');
+
+const port = process.env.PORT || config.PORT || 3000
+
 require('./models').connect(config.DBURL);
 
 const app = express();
