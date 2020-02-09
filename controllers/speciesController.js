@@ -92,9 +92,9 @@ exports.update = (req, res) => {
 
 //Deletes species with given name from a planet
 exports.deleteOne = (req, res) => {
-    if(!req.params.name) {
+    if(!req.params.id || !req.params.sid) {
         return res.status(400).send(
-            {message : "Name can't be empty"}
+            {message : "Invalid query params"}
         );
     }
     Planet.updateRemoveSpecies(req.params.id, req.params.sid)

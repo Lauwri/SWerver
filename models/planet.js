@@ -34,8 +34,8 @@ PlanetSchema.statics.updateAddSpecies = function(id, specie) {
 }
 
 PlanetSchema.statics.updateSpecies = function(id, sid, changedVals) {
-    return this.update({_id : id, "species._id" : sid}, 
-    { "$set": changedVals });
+    return this.updateOne({_id : id, "species._id": sid}, 
+    { "$set": { "species.$" : changedVals} });
 }
 
 PlanetSchema.statics.updateRemoveSpecies = function(id, sid) {
