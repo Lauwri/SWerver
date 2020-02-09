@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
+import Planets from './components/Planets';
+import Species from './components/Species';
+
 import './App.css';
 
 
@@ -7,13 +10,13 @@ interface State {
   active?: Planet;
 }
 
-interface Planet {
+export interface Planet {
   id: string;
   name: string;
   species: Specie[];
 }
 
-interface Specie {
+export interface Specie {
   name: string, 
   classification: string, 
   designation: string, 
@@ -96,7 +99,8 @@ const App: React.FC = () => {
       </header>
       
       <div className="App-container">
-
+        <Planets planets={state.planets}/>
+        <Species/>
       </div>
     </div>
   );

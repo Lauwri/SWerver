@@ -1,22 +1,27 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import {} from '../App'
+import React, { FunctionComponent, useEffect, useState, useReducer } from 'react';
+import { Planet } from '../App'
 import './Planets.css';
 
+interface Planets {
+  planets: Planet[]
+}
 
 
+const pager = (array: Planet[], page: number, size:number) => {
+  return array.slice((page - 1) * page, page * size);
+}
 
-const Planets: React.FC = ({}) => {
+const Planets: FunctionComponent<Planets> = ({planets}) => {
 
+  const [page, setPage] = useState(0);
 
   return (
-    <div className="Planet">
-      <header className="Planet-header">
-        <h3>Planet</h3>
-      </header>
-      
-      <div className="Planet-container">
+    <div className="Planets">
+      {page > 0 ? <button onClick={() => setPage(page+1)}>&lt;</button>:""}
 
-      </div>
+      <h3>{pager(planets, page, 1)[0].name }</h3>
+
+      {page < planets.length ? <button onClick={() => setPage(page-1)} >></button>:""}
     </div>
   );
 }
