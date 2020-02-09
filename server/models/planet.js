@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
+const SpecieSchema = require('./specie')
+
 
 const PlanetSchema = mongoose.Schema({
     name: String,
-    species: []
+    species: [SpecieSchema.schema]
 });
 
-PlanetSchema.statics.findOneSpecies = function(id, name, done) {
+PlanetSchema.statics.findOneSpecies = function(id, sid, done) {
     this.findById(id)
     .then(planet => {
         var found = planet.species.find(element => {
-            return element.name === name
+            return element._id == sid
         })
         return done(null, found);
     }).catch(err => {
@@ -31,14 +33,14 @@ PlanetSchema.statics.updateAddSpecies = function(id, specie) {
     },{ new : true, upsert : true });
 }
 
-PlanetSchema.statics.updateSpecies = function(id, name, changedVals) {
-    return this.update({_id : id, "species.name" : name}, 
+PlanetSchema.statics.updateSpecies = function(id, sid, changedVals) {
+    return this.update({_id : id, "species._id" : sid}, 
     { "$set": changedVals });
 }
 
-PlanetSchema.statics.updateRemoveSpecies = function(id, specie) {
+PlanetSchema.statics.updateRemoveSpecies = function(id, sid) {
     return this.findByIdAndUpdate(id, { "$pull": 
-    { species: {name : specie}}
+    { species: {_id : sid}}
     },{ new : true, safe : true });
 }
 
