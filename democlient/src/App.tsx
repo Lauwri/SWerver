@@ -8,13 +8,21 @@ interface State {
 }
 
 interface Planet {
-  id: number;
+  id: string;
   name: string;
-  species: Species[];
+  species: Specie[];
 }
 
-interface Species {
-  name: string;
+interface Specie {
+  name: string, 
+  classification: string, 
+  designation: string, 
+  average_height: number, 
+  skin_colors: string, 
+  hair_colors: string, 
+  eye_colors: string, 
+  average_lifespan: number,
+  language: string, 
 }
 
 
@@ -30,18 +38,36 @@ const combineReducers = (...reducers: Function[]) =>
     return state;
   }
 
-const planetReducer = (state: State = initialState, { type, value, index }: {type: string, value: Planet, index: number}): State => {
+const planetReducer = (state: State = initialState, { type, planet }: {type: string, planet: Planet}): State => {
+  switch (type) {
+    case "add":
+      return { ...state, planets: [...state.planets, planet]};
+    case "remove":
+      return { ...state, planets: state.planets.filter(p => p.id === planet.id) };
+    case "update":
+      let temp = [...state.planets];
+      temp[temp.findIndex(p => p.id === planet.id)] = planet;
+      return {...state, planets: temp};
+    default:
+      return state;
+  }
+}
+
+const speciesReducer = (state: State = initialState, { type, id, specie }: {type: string, id: string, specie: Specie}): State => {
   let temp;
   switch (type) {
     case "add":
-      return { ...state, planets: [...state.planets, value]};
+      temp = [...state.planets];
+      temp[temp.findIndex(p => p.id === id)].species.push(specie);
+      return {...state, planets: temp};
     case "remove":
       temp = [...state.planets];
-      temp.splice(index,1);
+      temp.find(p => p.id === id)?.species.filter(s => s.name === specie.name);
       return { ...state, planets: temp };
     case "update":
       temp = [...state.planets];
-      temp[index] = value
+      let indx = temp.findIndex(p => p.id === id);
+      temp[indx].species[temp[indx].species.findIndex(s => s.name === specie.name)] = specie;
       return {...state, planets: temp};
     default:
       return state;
@@ -61,7 +87,7 @@ const activeReducer = (state: State = initialState, { type, index }: any) => {
 
 const App: React.FC = () => {
 
-  const [state, dispatch] = useReducer(combineReducers(planetReducer, activeReducer), initialState);
+  const [state, dispatch] = useReducer(combineReducers(planetReducer, activeReducer, speciesReducer), initialState);
 
   return (
     <div className="App">
