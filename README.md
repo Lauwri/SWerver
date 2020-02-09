@@ -26,36 +26,36 @@ Production
 
 API implements basic CRUD operations for planets and species
 
-```GET /planets
-return Array<Planet>```
+```GET /planets```
+```return Array<Planet>```
 Get all planets
 
-```GET /planets/:id
-return Planet```
+```GET /planets/:id```
+```return Planet```
 Get planet with id
 
-```GET /planets/:id/species
-return Array<Species>```
+```GET /planets/:id/species```
+```return Array<Species>```
 Get all species of a planet
 
-```GET /planets/:id/species/:sid
-return Species```
+```GET /planets/:id/species/:sid```
+```return Species```
 Get a certain species of a planet
 
-```POST /planets/
-body: {name : string}```
+```POST /planets/```
+```body: {name : string}```
 Add a planet with name
 
-```POST /planets/:id/species
-body: {name : string}```
+```POST /planets/:id/species```
+```body: {name : string}```
 Add a species from swapi
 
-```PUT /planets/:id
-body: {name : string}```
+```PUT /planets/:id```
+```body: {name : string}```
 Edit planet name
 
-```PUT /planets/:id/species/:sid
-body: {changedVals : Specie}```
+```PUT /planets/:id/species/:sid```
+```body: {changedVals : Specie}```
 Edit specie values
 
 ```DELETE /planets/```
@@ -73,25 +73,25 @@ Remove species with id from planet
 
 **Planet Model**
 
-```{
-  "_id": unique string,
-  "name": string,
-  "species": [
-    Array of species objects from SWapi
-  ]
-}```
+```{```
+```  "_id": unique string,```
+```  "name": string,```
+```  "species": [```
+```    Array of species objects from SWapi```
+```  ]```
+```}```
 
 **Specie Model**
 
-```{
-  "_id": unique string,
-  "name": string",
-  "classification": string,
-  "designation": string,
-  "average_height": number,
-  "skin_colors": string,
-  "hair_colors": string,
-  "eye_colors": string,
-  "average_lifespan": number,
-  "language": string
-}```
+```{```
+```  "_id": unique string,```
+```  "name": string",```
+```  "classification": string,```
+```  "designation": string,```
+```  "average_height": number,```
+```  "skin_colors": string,```
+```  "hair_colors": string,```
+```  "eye_colors": string,```
+```  "average_lifespan": number,```
+```  "language": string```
+```}```
