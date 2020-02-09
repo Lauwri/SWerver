@@ -27,47 +27,47 @@ Production
 API implements basic CRUD operations for planets and species
 
 ```GET /planets```
-```return Array<Planet>```
+```return Array<Planet>```  
 Get all planets
 
 ```GET /planets/:id```
-```return Planet```
+```return Planet```  
 Get planet with id
 
 ```GET /planets/:id/species```
-```return Array<Species>```
+```return Array<Species>```  
 Get all species of a planet
 
 ```GET /planets/:id/species/:sid```
-```return Species```
+```return Species```  
 Get a certain species of a planet
 
 ```POST /planets/```
-```body: {name : string}```
+```body: {name : string}```  
 Add a planet with name
 
 ```POST /planets/:id/species```
-```body: {name : string}```
+```body: {name : string}```  
 Add a species from swapi
 
 ```PUT /planets/:id```
-```body: {name : string}```
+```body: {name : string}```  
 Edit planet name
 
 ```PUT /planets/:id/species/:sid```
-```body: {changedVals : Specie}```
+```body: {changedVals : Specie}```  
 Edit specie values
 
-```DELETE /planets/```
+```DELETE /planets/```  
 Remove all planets
 
-```DELETE /planets/:id```
+```DELETE /planets/:id```  
 Remove planet with id
 
-```DELETE /planets/:id/species```
+```DELETE /planets/:id/species```  
 Remove all species from planet
 
-```DELETE /planets/:id/species/:sid```
+```DELETE /planets/:id/species/:sid```  
 Remove species with id from planet
 
 
