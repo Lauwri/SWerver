@@ -16,12 +16,12 @@ exports.findAll = (req, res) => {
 
 //finds one species in a planet, with param "name"
 exports.findOne = (req, res) => {
-    Planet.findOneSpecies(req.params.id, req.params.name, (err, result) => {
+    Planet.findOneSpecies(req.params.id, req.params.sid, (err, result) => {
         if(!err) {
             if(result) {
                 return res.send(result);
             } else {
-                return res.status(404).send({ message: "Species with given name not found :("});
+                return res.status(404).send({ message: "No such specie:("});
             }
         }
         res.status(500).send({ message: err.message});
@@ -79,7 +79,7 @@ exports.update = (req, res) => {
         return res.status(400).send({ message: "Name can't be empty"});
     }
 
-    Planet.updateSpecies(req.params.id, req.params.name, req.body.changedValues)
+    Planet.updateSpecies(req.params.id, req.params.sid, req.body.changedValues)
     .then(planet => {
         if(planet) {
             return res.send(planet);
@@ -97,7 +97,7 @@ exports.deleteOne = (req, res) => {
             {message : "Name can't be empty"}
         );
     }
-    Planet.updateRemoveSpecies(req.params.id, req.params.name)
+    Planet.updateRemoveSpecies(req.params.id, req.params.sid)
     .then(planet => {
         if(planet) {
             return res.send({
