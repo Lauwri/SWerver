@@ -14,7 +14,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "helmet": "^3.12.1",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^5.8.11"
